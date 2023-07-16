@@ -1,14 +1,14 @@
 const http = require('http')
 const port = 5000;
 
-const { router, routes } = require('./router')
+const { router, register } = require('./router')
 const openFile = require('./util')
 
 const server = http.createServer(router)
 
-routes['/'] = homeController
-routes['/about'] = aboutController
-routes['/catalog'] = catalogController
+register('/', homeController)
+register('/about', aboutController)
+register('/catalog', catalogController)
 
 server.listen(port, () => console.log(`Server started on port ${port}`))
 

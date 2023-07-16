@@ -4,7 +4,7 @@ const routes = {}
 
 function router(req, res) {
     const url = new URL(req.url, `http://${req.headers.host}`)
-    
+
     const handler = routes[url.pathname]
     if (typeof handler == 'function') {
         handler(req, res)
@@ -12,10 +12,13 @@ function router(req, res) {
         openFile('../Views/default', req, res)
     }
 }
+function register(pathname, handler) {
+    routes[pathname] = handler
+}
 
 
 
 module.exports = {
-    routes,
+    register,
     router
 }
