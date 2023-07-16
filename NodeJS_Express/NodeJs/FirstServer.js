@@ -1,5 +1,6 @@
 const http = require('http')
 const url = require('url')
+const fs = require('fs')
 const queryString = require('querystring')
 const port = 5000;
 
@@ -15,21 +16,32 @@ function requestHavndler(req, res) {
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             })
-            res.write('<h1>First Page</h1>')
+            fs.readFile('./Views/first.html', (err, data) => {
+                if (err) {
+                    console.log('Error');
+                    return;
+                }
+                // console.log(data);
+                res.write(data)
+                res.end()
+            })
             break;
+            
         case '/second':
             res.writeHead(200, {
                 'Content-Type': 'text/plain'
             })
             res.write('Second Page')
+            res.end()
             break;
+
         default:
             res.writeHead(404, {
                 'Content-Type': 'text/plain'
             })
+            res.end()
             break;
-    }   
-    res.end()
+    }
 }
 
 const app = http.createServer(requestHavndler)
