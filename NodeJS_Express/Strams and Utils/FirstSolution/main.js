@@ -9,9 +9,13 @@ const queryString = require('querystring')
 
 const events = require('events')
 const pubSub = require('./pubSub')
-const { readFileAsync } = require('./utils')
+// const { readFileAsync } = require('./utils')
+const util = require('util')
 
 const port = 5000;
+
+//Готова библиотека
+const readFileAsync = util.promisify(fs.readFile);
 
 //Добавяме нова ф-я която ще се изпълни паралелно с другата
 const catLogger = (name) => {
