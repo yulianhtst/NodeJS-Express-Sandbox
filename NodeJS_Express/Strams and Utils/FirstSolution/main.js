@@ -28,7 +28,7 @@ function requestHavndler(req, res) {
     let reqUrl = url.parse(req.url)
     let params = queryString.parse(reqUrl.query)
 
-    const readStream = fs.createReadStream('./View/cats.html', { highWaterMark: 10, encoding: 'utf-8' })
+    // const readStream = fs.createReadStream('./View/cats.html', { highWaterMark: 20, encoding: 'utf-8' })
 
 
     switch (reqUrl.pathname) {
@@ -36,12 +36,23 @@ function requestHavndler(req, res) {
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             })
-            readStream.on('data', (chunk) => res.write(chunk))
-            readStream.on('end', () => res.end())
+            // readStream.on('data', (chunk) => res.write(chunk))
+            // readStream.on('end', () => res.end())
+
+            // readStream.pipe(res)
+
+            //async files
+            fs.readFile('./View/cats.html', { encoding: 'utf-8' }, (err, data) => {
+                if (err) {
+                    return res.end()
+                }
+                res.write(data)
+            })
 
             //pub/sub example
             pubSub.publish('cats', params.name)
             eventEmiter.emit('cats', params.name)
+
             break;
 
         case '/dogs':
