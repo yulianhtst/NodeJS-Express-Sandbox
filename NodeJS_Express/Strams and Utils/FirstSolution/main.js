@@ -1,24 +1,13 @@
 const http = require('http')
 const url = require('url')
 const pubSub = require('./pubSub')
-
+require('./init')
 //Класа ULR ни дава директен достъп до href,protocol,username,password,host,hostname,search,SearchParams[Същотото като querryString],hash
 // const url = new URL('/catalog?page=4#pricing', 'http://localhost:5000')
 const fs = require('fs')
 const queryString = require('querystring')
 const port = 5000;
-const names = []
 
-//pub/sub example
-const onHomeRequest = (name) => {
-    if (names.includes(name)) {
-        console.log(`Name ${name} hello again `);
-    } else {
-        console.log(`We have new cat - ${name}`);
-        names.push(name)
-    }
-    console.log(`We have new Cat - ${name}`);
-}
 
 function requestHavndler(req, res) {
     let reqUrl = url.parse(req.url)
@@ -40,7 +29,7 @@ function requestHavndler(req, res) {
                 res.end()
             })
             //pub/sub example
-            onHomeRequest(params.name)
+            pubSub.publish('cats', params.name)
             break;
 
         case '/dogs':
