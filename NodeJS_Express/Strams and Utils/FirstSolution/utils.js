@@ -2,7 +2,7 @@ const fs = require('fs')
 
 function readFileAsync(path) {
     return new Promise((resolve, reject) => {
-        fs.readFile(parh, (err, data) => {
+        fs.readFile(path, (err, data) => {
             if (err) {
                 return reject(err)
             }
@@ -11,4 +11,4 @@ function readFileAsync(path) {
         })
     })
 }
-module.exports = readFileAsync
+module.exports = { readFileAsync }

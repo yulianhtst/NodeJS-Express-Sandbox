@@ -53,7 +53,7 @@ function requestHavndler(req, res) {
 
             //Async reading from file
             readFileAsync('./View/cats.html')
-                .then((data) => {
+                .then(data => {
                     res.write(data)
                     res.end()
                 })
