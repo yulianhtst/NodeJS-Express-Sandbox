@@ -9,6 +9,7 @@ const queryString = require('querystring')
 
 const events = require('events')
 const pubSub = require('./pubSub')
+const { readFileAsync } = require('./utils')
 
 const port = 5000;
 
@@ -42,12 +43,21 @@ function requestHavndler(req, res) {
             // readStream.pipe(res)
 
             //async files
-            fs.readFile('./View/cats.html', { encoding: 'utf-8' }, (err, data) => {
-                if (err) {
-                    return res.end()
-                }
-                res.write(data)
-            })
+            // fs.readFile('./View/cats.html', { encoding: 'utf-8' }, (err, data) => {
+            //     if (err) {
+            //         return res.end()
+            //     }
+            //     res.write(data)
+            //     res.end()
+            // })
+
+            //Async reading from file
+            readFileAsync('./View/cats.html')
+                .then((data) => {
+                    res.write(data)
+                    res.end()
+                })
+
 
             //pub/sub example
             pubSub.publish('cats', params.name)
