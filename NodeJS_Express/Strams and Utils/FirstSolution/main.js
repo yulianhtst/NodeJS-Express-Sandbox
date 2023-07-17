@@ -28,21 +28,17 @@ function requestHavndler(req, res) {
     let reqUrl = url.parse(req.url)
     let params = queryString.parse(reqUrl.query)
 
+    const readStream = fs.createReadStream('./View/cats.html', { highWaterMark: 10, encoding: 'utf-8' })
+
 
     switch (reqUrl.pathname) {
         case '/cats':
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             })
-            fs.readFile('./View/cats.html', (err, data) => {
-                if (err) {
-                    console.log('Error', err);
-                    return;
-                }
-                // console.log(data);
-                res.write(data)
-                res.end()
-            })
+            readStream.on('data', (chunk) => res.write(chunk))
+            readStream.on('end', () => res.end())
+
             //pub/sub example
             pubSub.publish('cats', params.name)
             eventEmiter.emit('cats', params.name)
