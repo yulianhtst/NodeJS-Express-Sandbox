@@ -21,6 +21,12 @@ module.exports = {
         events[eventName].push(callback)
     },
     // //Off
-    // unsubscribe(eventName, callback) {
-    // },
-} 
+    unsubscribe(eventName, callback) {
+        if (events[eventName]) {
+            const index = events[eventName].indexOf(callback);
+            if (index !== -1) {
+                events[eventName].splice(index, 1);
+            }
+        }
+    }
+}
