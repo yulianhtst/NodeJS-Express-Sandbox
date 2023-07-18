@@ -20,7 +20,7 @@ function requestHavndler(req, res) {
             res.writeHead(200, {
                 'Content-Type': 'text/html'
             })
-            fs.readFile('./Views/home.html', (err, data) => {
+            fs.readFile('../Views/home.html', (err, data) => {
                 if (err) {
                     console.log('Error');
                     return;
