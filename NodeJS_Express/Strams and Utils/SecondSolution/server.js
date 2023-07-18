@@ -1,11 +1,23 @@
 const http = require('http')
+const fs = require('fs')
 
 const port = 5000;
 
 const server = http.createServer((req, res) => {
     if (req.method == 'GET') {
-        res.write('hi')
-        res.end()
+        // fs.readFile('./index.html', 'utf-8', (err, data) => {
+        //     res.write(data)
+        //     res.end()
+        // })
+
+        // const fileStream = fs.createReadStream('./index.html')
+        // fileStream.on('data', data => {
+        //     res.write(data)
+        // })
+        // fileStream.on('end', () => res.end())
+
+        fs.createReadStream('./index.html').pipe(res)
+
     } else if (req.method == 'POST') {
         let buffer = ''
 
@@ -21,7 +33,7 @@ const server = http.createServer((req, res) => {
             res.writeHead(200, {
                 'Content-Type': 'application/json'
             })
-            
+
             res.write(JSON.stringify(bufferAsObj))
             res.end()
         })
