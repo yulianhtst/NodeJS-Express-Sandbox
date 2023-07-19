@@ -1,5 +1,6 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
+const { urlencoded } = require('body-parser')
 const app = express()
 const port = 5000;
 
@@ -7,8 +8,10 @@ const checkCatIdMiddleware = require('./Middlewares/middleware')
 
 const cats = []
 
-
-app.engine('hbs', handlebars.engine())
+app.use(urlencoded({ extended: false }))
+app.engine('hbs', handlebars.engine({
+    extname: "hbs"
+}))
 //подаваме за втори параметър името което сме написали горе в енджина
 app.set('view engine', 'hbs');
 
@@ -17,17 +20,20 @@ app.set('view engine', 'hbs');
 app.use('/static', express.static('public'))
 
 
-app.get('/:name?', (req, res) => {
+app.get('/', (req, res) => {
     let name = 'Pesno'
     //Подава се като пропъртита в react 
-    res.render('home', { layout: false, name })
+    res.render('home', { name })
 
+})
+app.get('/cats', (req, res) => {
+    res.render('cats')
 })
 app.post('/cats', (req, res) => {
     console.log(`create a cat `);
 
     // res.statusCode=201
-    res.status(201).send('cat Created')
+    res.redirect('/cats ')
 })
 app.get('/download', (req, res) => {
     res.download('./views/home.html')
