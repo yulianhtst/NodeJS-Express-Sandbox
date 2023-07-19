@@ -1,16 +1,11 @@
 const express = require('express')
-const { engine } = require('express-handlebars')
 const config = require('./config/config')
 const app = express()
 
 const port = config.PORT || 5000
-//-----------------------------------------------
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
 
-//-----------MIDDLEWARE--------------------------
-app.engine('hbs', engine({ extname: 'hbs' }))
-app.set('view engine', 'hbs')
+require('./config/express')(app)
+// configExpress(app)
 
 //-----------------------------------------------
 app.get('/', (req, res) => {
