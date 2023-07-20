@@ -11,6 +11,4 @@ require('./config/express')(app)
 
 app.use(routes)
 
-
-
 app.listen(port, () => console.log(`Server started at port ${port}`)); 

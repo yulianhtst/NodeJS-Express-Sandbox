@@ -6,6 +6,7 @@ function setupExpress(app) {
 
     app.use(express.urlencoded({ extended: false }))
     app.use(express.static('public'))
+
     //-----------------------------------------------
 
     app.engine('hbs', engine({ extname: 'hbs' }))
