@@ -6,9 +6,11 @@ const router = Router()
 // router.route()
 
 
-router.use('/about', aboutRoute)
 router.use('/', productRoutes)
-// router.use('*', (req, res) => {
-//     res.render('404', { layout: false })
+router.use('/about', aboutRoute)
+
+// router.use('/something', (req, res) => {
+//     res.render('404')
 // })
+
 module.exports = router
