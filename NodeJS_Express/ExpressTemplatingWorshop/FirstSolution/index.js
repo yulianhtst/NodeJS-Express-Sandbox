@@ -7,10 +7,9 @@ const app = express()
 
 const port = config.PORT || 5000
 
-app.use(routes)
-
 require('./config/express')(app)
-// configExpress(app)
+
+app.use(routes)
 
 
 

@@ -3,7 +3,8 @@ const express = require('express')
 
 function setupExpress(app) {
     //-----------MIDDLEWARE--------------------------
-    app.use(express.urlencoded({ extended: true }))
+
+    app.use(express.urlencoded({ extended: false }))
     app.use(express.static('public'))
     //-----------------------------------------------
 

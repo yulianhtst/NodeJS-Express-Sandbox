@@ -1,16 +1,16 @@
 const productRoutes = require('./controllers/productController')
-const aboutRoute = require('./controllers/aboutController')
+const homeController = require('./controllers/homeController')
 const { Router } = require('express')
 const router = Router()
 
 // router.route()
 
 
-router.use('/', productRoutes)
-router.use('/about', aboutRoute)
+router.use('/', homeController)
+router.use('/products', productRoutes)
 
-// router.use('/something', (req, res) => {
-//     res.render('404')
-// })
+router.use('*',(req, res) => {
+    res.render('404')
+})
 
 module.exports = router
