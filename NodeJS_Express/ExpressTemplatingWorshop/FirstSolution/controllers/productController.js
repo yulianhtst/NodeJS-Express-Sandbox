@@ -8,15 +8,22 @@ router.get('/', (req, res) => {
 
 router.route('/create')
     .get(async (req, res) => {
-
+        res.render('create')
     })
     .post(async (req, res) => {
-        const cars = await req.storage.getAll()
-
+        req.storage.createCar(req.body)
+        res.status(201);
+        res.redirect('/products')
     })
 
-router.get('/details/:_id', (req, res) => {
-    res.render('details')
+router.get('/details/:_id', async (req, res) => {
+    console.log(req.params._id);
+    const car = await req.storage.getById(req.params._id)
+    if (car) {
+        res.render('details', { car })
+    } else {
+        res.redirect('/404')
+    }
 })
 
 module.exports = router
