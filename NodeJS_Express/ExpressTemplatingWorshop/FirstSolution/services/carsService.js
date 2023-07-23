@@ -1,6 +1,5 @@
 const fs = require('fs').promises
 const filePath = './services/database.json'
-const uniqid = require('uniqid')
 
 async function read() {
     try {
@@ -21,21 +20,21 @@ async function write(data) {
     }
 }
 
-async function getAll(query) {
+async function getAll({search,from,to}) {
     const data = await read()
     let cars = Object
         .entries(data)
         .map(([id, v]) => Object.assign({}, { id }, v))
 
 
-    if (query.search) {
-        cars = cars.filter(x => x.name.toLocaleLowerCase().includes(query.search.toLocaleLowerCase()))
+    if (search) {
+        cars = cars.filter(x => x.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()))
     }
-    if (query.from) {
-        cars = cars.filter(x => x.price >= Number(query.from))
+    if (from) {
+        cars = cars.filter(x => x.price >= Number(from))
     }
-    if (query.to) {
-        cars = cars.filter(x => x.price <= Number(query.from))
+    if (to) {
+        cars = cars.filter(x => x.price <= Number(from))
     }
 
     return cars
