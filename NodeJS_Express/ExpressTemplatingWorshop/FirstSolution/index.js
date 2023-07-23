@@ -3,10 +3,9 @@ const express = require('express')
 const config = require('./config/config')
 const routes = require('./routes')
 
-
+const port = config.PORT || 5000
 const app = express()
 
-const port = config.PORT || 5000
 
 require('./config/express')(app)
 
