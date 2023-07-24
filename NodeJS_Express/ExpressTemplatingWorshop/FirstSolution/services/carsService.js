@@ -21,7 +21,7 @@ async function write(data) {
 }
 
 async function getAll({search,from,to}) {
-    const data = await read()
+    const data = await read()  
     let cars = Object
         .entries(data)
         .map(([id, v]) => Object.assign({}, { id }, v))
@@ -44,13 +44,13 @@ async function getById(id) {
     const data = await read()
     const car = data[id]
 
+
     if (car) {
         return Object.assign({}, { id }, car)
     } else {
         undefined;
     }
 }
-
 async function createCar(data) {
     const cars = await read()
     let id = 'xxxx-xxxx-xxxx'.replace(/x/g, () => (Math.random() * 16 | 0))
