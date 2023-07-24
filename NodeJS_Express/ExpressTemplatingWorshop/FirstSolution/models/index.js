@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const car = require('./Car')
+require('./Car')
 
 const connectionString = "mongodb://localhost:27017/carbicle"
 
