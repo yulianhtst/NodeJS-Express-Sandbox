@@ -2,13 +2,19 @@ const express = require('express')
 
 const config = require('./config/config')
 const routes = require('./routes')
+const connectDb = require('./models/index')
 
 const port = config.PORT || 5000
-const app = express()
 
+init()
+async function init() {
+    await connectDb()
 
-require('./config/express')(app)
+    const app = express()
 
-app.use(routes)
+    require('./config/express')(app)
 
-app.listen(port, () => console.log(`Server started at port ${port}`)); 
+    app.use(routes)
+
+    app.listen(port, () => console.log(`Server started at port ${port}`));
+}  
