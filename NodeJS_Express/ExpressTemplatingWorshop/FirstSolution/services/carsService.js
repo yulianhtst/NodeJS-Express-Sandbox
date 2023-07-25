@@ -35,6 +35,10 @@ async function createCar(data) {
     await result.save()
 }
 
+async function deleteCar(id) {
+   await Car.findByIdAndDelete(id)
+}
+
 
 module.exports = () => (req, res, next) => {
     req.storage = {
