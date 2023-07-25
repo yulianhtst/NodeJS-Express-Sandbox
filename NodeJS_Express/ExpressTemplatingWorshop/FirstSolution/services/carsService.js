@@ -1,5 +1,6 @@
 const Car = require('../models/Car')
 
+
 async function getAll({ search, from, to }) {
     const options = {};
 
@@ -19,6 +20,11 @@ async function getAll({ search, from, to }) {
     return await Car.find(options).lean()
 }
 
+async function editCar(id, data) {
+    const car = await Car.findByIdAndUpdate(id, data)
+    console.log(car);
+}
+
 async function getById(id) {
     const car = await Car.findById(id).lean()
 
@@ -36,9 +42,17 @@ async function createCar(data) {
 }
 
 async function deleteCar(id) {
-   await Car.findByIdAndDelete(id)
+    await Car.findByIdAndDelete(id)
 }
 
+function requests(req) {
+    return {
+        name: req.body.name || 'No name',
+        description: req.body.description || 'No description',
+        imageUrl: req.body.imageUrl || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
+        price: parseFloat(req.body.price.replace(',', '')) || 0
+    }
+}
 
 module.exports = () => (req, res, next) => {
     req.storage = {
@@ -46,6 +60,8 @@ module.exports = () => (req, res, next) => {
         getById,
         createCar,
         deleteCar,
+        editCar,
+        requests,
     }
     next()
 }

@@ -11,12 +11,9 @@ router.route('/create')
         res.render('create')
     })
     .post(async (req, res) => {
-        const car = {
-            name: req.body.name || 'No name',
-            description: req.body.description || 'No description',
-            imageUrl: req.body.imageUrl || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-            price: parseFloat(req.body.price.replace(',', '')) || 0
-        }
+
+        const car = req.storage.requests(req)
+
         await req.storage.createCar(car)
 
         res.status(201).redirect('/products')
@@ -48,7 +45,8 @@ router.route('/edit/:_id')
     })
     .post(async (req, res) => {
         const id = req.params._id
-        const data = req.body
+        const data = req.storage.requests(req)
+
         await req.storage.editCar(id, data)
         res.redirect(`/products/details/${id}`)
     })
