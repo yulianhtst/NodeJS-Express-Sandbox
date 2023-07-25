@@ -41,6 +41,13 @@ router.route('/delete/:_id')
         }
     })
 
+router.route('/edit/:_id')
+    .get(async (req, res) => {
+        const car = await req.storage.getById(req.params._id)
+        res.render('edit', { car })
+    })
+
+
 
 router.get('/details/:_id', async (req, res) => {
     const car = await req.storage.getById(req.params._id)
