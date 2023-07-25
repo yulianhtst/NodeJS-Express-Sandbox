@@ -46,6 +46,12 @@ router.route('/edit/:_id')
         const car = await req.storage.getById(req.params._id)
         res.render('edit', { car })
     })
+    .post(async (req, res) => {
+        const id = req.params._id
+        const data = req.body
+        await req.storage.editCar(id, data)
+        res.redirect(`/products/details/${id}`)
+    })
 
 
 

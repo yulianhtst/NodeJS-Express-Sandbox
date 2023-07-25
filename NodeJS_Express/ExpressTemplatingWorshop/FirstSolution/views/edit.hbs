@@ -1,7 +1,8 @@
 <main>
-  <h1>Edit</h1>
+  {{#with car}}
+  <h1>Edit: {{name}}</h1>
   <div class="form">
-    <form action="/products/create" method="POST">
+    <form action="/products/edit/{{_id}}" method="POST">
       <label for="name">Name</label>
       <input type="text" id="name" name="name" />
       <label for="name">Description</label>
@@ -10,8 +11,8 @@
       <input type="text" id="image" name="imageUrl" />
       <label for="price">Price</label>
       <input type="text" id="price" name="price"></input>
- 
-      <input type="submit" value="Create" />
+      <input type="submit" value="Confirm" />
     </form>
   </div>
+  {{/with}}
 </main>
