@@ -45,6 +45,7 @@ module.exports = () => (req, res, next) => {
         getAll,
         getById,
         createCar,
+        deleteCar,
     }
     next()
 }

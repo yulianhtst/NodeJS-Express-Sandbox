@@ -18,12 +18,31 @@ router.route('/create')
             price: parseFloat(req.body.price.replace(',', '')) || 0
         }
         await req.storage.createCar(car)
-        res.status(201);
-        res.redirect('/products')
+
+        res.status(201).redirect('/products')
     })
 
+router.route('/delete/:_id')
+    .get(async (req, res) => {
+        const car = await req.storage.getById(req.params._id)
+
+        try {
+            res.render('delete', { car })
+        } catch (error) {
+            console.log(error, 'Couldnt load Delete');
+        }
+    })
+    .post(async (req, res) => {
+        try {
+            await req.storage.deleteCar(req.params._id)
+            res.redirect('/products')
+        } catch (error) {
+            console.log(error, 'Invalid ID');
+        }
+    })
+
+
 router.get('/details/:_id', async (req, res) => {
-    console.log(req.params._id);
     const car = await req.storage.getById(req.params._id)
     if (car) {
         res.render('details', { car })
