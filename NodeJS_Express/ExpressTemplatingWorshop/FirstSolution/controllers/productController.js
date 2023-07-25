@@ -12,7 +12,7 @@ router.route('/create')
     })
     .post(async (req, res) => {
 
-        const car = req.storage.requests(req)
+        const car = req.storage.bodyData()
 
         await req.storage.createCar(car)
 
@@ -45,7 +45,7 @@ router.route('/edit/:_id')
     })
     .post(async (req, res) => {
         const id = req.params._id
-        const data = req.storage.requests(req)
+        const data = req.storage.bodyData()
 
         await req.storage.editCar(id, data)
         res.redirect(`/products/details/${id}`)
