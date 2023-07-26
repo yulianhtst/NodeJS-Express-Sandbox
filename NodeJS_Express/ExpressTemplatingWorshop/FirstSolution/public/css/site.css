@@ -100,7 +100,7 @@ main a.btn {
   font-size: 18px;
   width: 43%;
   margin: 12px;
-  margin-left: 6%;
+  margin-left: auto;
   border-radius: 4px;
   background: #607588;
   color: white;

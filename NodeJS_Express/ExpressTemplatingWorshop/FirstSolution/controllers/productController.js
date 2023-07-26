@@ -11,19 +11,49 @@ router.route('/create')
         res.render('create')
     })
     .post(async (req, res) => {
-        const car = {
-            name: req.body.name || 'No name',
-            description: req.body.description || 'No description',
-            imageUrl: req.body.imageUrl || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-            price: req.body.price || 'Nagotiation',
-        }
+
+        const car = req.storage.bodyData()
+
         await req.storage.createCar(car)
-        res.status(201);
-        res.redirect('/products')
+
+        res.status(201).redirect('/products')
     })
 
+router.route('/delete/:_id')
+    .get(async (req, res) => {
+        const car = await req.storage.getById(req.params._id)
+
+        try {
+            res.render('delete', { car })
+        } catch (error) {
+            console.log(error, 'Couldnt load Delete');
+        }
+    })
+    .post(async (req, res) => {
+        try {
+            await req.storage.deleteCar(req.params._id)
+            res.redirect('/products')
+        } catch (error) {
+            console.log(error, 'Invalid ID');
+        }
+    })
+
+router.route('/edit/:_id')
+    .get(async (req, res) => {
+        const car = await req.storage.getById(req.params._id)
+        res.render('edit', { car })
+    })
+    .post(async (req, res) => {
+        const id = req.params._id
+        const data = req.storage.bodyData()
+
+        await req.storage.editCar(id, data)
+        res.redirect(`/products/details/${id}`)
+    })
+
+
+
 router.get('/details/:_id', async (req, res) => {
-    console.log(req.params._id);
     const car = await req.storage.getById(req.params._id)
     if (car) {
         res.render('details', { car })
