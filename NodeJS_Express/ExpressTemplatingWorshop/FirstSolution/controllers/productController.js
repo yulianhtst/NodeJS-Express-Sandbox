@@ -21,7 +21,7 @@ router.route('/create')
 
 router.route('/delete/:_id')
     .get(async (req, res) => {
-        const car = await req.storage.getById(req.params._id)
+        const car = await req.storage.getCarById(req.params._id)
 
         try {
             res.render('delete', { car })
@@ -40,7 +40,7 @@ router.route('/delete/:_id')
 
 router.route('/edit/:_id')
     .get(async (req, res) => {
-        const car = await req.storage.getById(req.params._id)
+        const car = await req.storage.getCarById(req.params._id)
         res.render('edit', { car })
     })
     .post(async (req, res) => {
@@ -54,7 +54,7 @@ router.route('/edit/:_id')
 
 
 router.get('/details/:_id', async (req, res) => {
-    const car = await req.storage.getById(req.params._id)
+    const car = await req.storage.getCarById(req.params._id)
     if (car) {
         res.render('details', { car })
     } else {

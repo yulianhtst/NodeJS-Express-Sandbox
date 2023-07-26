@@ -3,7 +3,7 @@ const router = Router()
 
 
 router.get('/', async (req, res) => {
-    const cars = await req.storage.getAll(req.query)
+    const cars = await req.storage.getAllCars(req.query)
 
     res.render('home', { cars, query: req.query })
 })
