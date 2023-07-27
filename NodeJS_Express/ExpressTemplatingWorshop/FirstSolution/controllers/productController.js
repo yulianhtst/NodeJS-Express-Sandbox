@@ -62,4 +62,12 @@ router.get('/details/:_id', async (req, res) => {
     }
 })
 
+router.route('/attach/:_id')
+    .get((req, res) => {
+        //TODO getAllAccessory service 
+        res.render('attachAccessory', { accessories })
+    })
+    .post(async (req, res) => {
+
+    })
 module.exports = router

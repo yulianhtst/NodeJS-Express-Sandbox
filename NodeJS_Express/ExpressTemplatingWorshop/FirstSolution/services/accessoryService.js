@@ -1,19 +1,12 @@
 const Accessory = require('../models/Accessory')
 
 async function createAccessory(data) {
-    console.log('hello');
-    // await Accessory.create(data)
+    await Accessory.create(data)
+}
+async function deleteAccessoryById(id) {
+    await Accessory.findOneAndDelete(id)
 }
 module.exports = {
-    createAccessory
+    createAccessory,
+    deleteAccessoryById,
 }
-
-
-// module.exports = () => (req, res, next) => {
-//     req.storage = {
-//         createAccessory,
-//     }
-//     next()
-// }
-
-

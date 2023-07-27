@@ -1,10 +1,10 @@
 const { Schema, model } = require('mongoose')
 
 const accessorySchema = new Schema({
-    name: { type: String, required: true },
+    name: { type: String },
     description: { type: String },
     imageUrl: { type: String },
-    price: { type: Number, min: 0 }
+    price: { type: Number }
 })
 
 const Accessory = model('Accessory', accessorySchema)
