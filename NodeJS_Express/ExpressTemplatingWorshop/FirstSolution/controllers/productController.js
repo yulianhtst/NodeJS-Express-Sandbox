@@ -84,7 +84,7 @@ router.route('/attach/:_id')
         // car.accessories.push(accessoryId)
         // await car.save()
 
-        req.storage.attachAccessory(carId, accessory)
+        req.storage.attachAccessory(carId, accessoryId)
 
         res.redirect(`/products/details/${req.params._id}`)
         //TODO Create a realtion with car 
