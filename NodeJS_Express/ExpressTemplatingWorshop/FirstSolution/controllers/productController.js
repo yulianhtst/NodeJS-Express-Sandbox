@@ -53,9 +53,15 @@ router.route('/edit/:_id')
 
 router.get('/details/:_id', async (req, res) => {
     const car = await req.storage.getCarById(req.params._id)
-    console.log(car.accessories);
+    // const accessories = await req.storage.getAllAccessory()
+    // console.log(accessories);
+
+    const accessoryIdObj = car.accessories
+    const idArr = await req.storage.getManyAccessories(accessoryIdObj)
+    console.log(idArr);
+
     if (car) {
-        res.render('details', { car })
+        res.render('details', { car, idArr })
     } else {
         res.redirect('/404')
     }
@@ -64,9 +70,6 @@ router.get('/details/:_id', async (req, res) => {
 router.route('/attach/:_id')
     .get(async (req, res) => {
         const carId = req.params._id
-
-        // const car = await req.storage.getCarById(carId)
-        // const accessories = await req.storage.getAllAccessory()
 
         const [car, accessories] = await Promise.all([
             req.storage.getCarById(carId),
@@ -87,7 +90,5 @@ router.route('/attach/:_id')
         req.storage.attachAccessory(carId, accessoryId)
 
         res.redirect(`/products/details/${req.params._id}`)
-        //TODO Create a realtion with car 
-        //TODO 
     })
 module.exports = router
