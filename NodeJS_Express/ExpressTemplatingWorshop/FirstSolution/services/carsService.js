@@ -28,7 +28,6 @@ async function editCar(id, data) {
 
 async function getCarById(id) {
     const car = await Car.findById(id).lean()
-
     if (car) {
         return car
     } else {
@@ -46,27 +45,6 @@ async function deleteCar(id) {
     await Car.findByIdAndDelete(id)
 }
 
-
-
-// function bodyData() {
-//     return {
-//         name: req.body.name || 'No name',
-//         description: req.body.description || 'No description',
-//         imageUrl: req.body.imageUrl || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-//         price: parseFloat(req.body.price.replace(',', '')) || 0,
-//     }
-// }
-// module.exports = () => (req, res, next) => {
-//     req.storage = {
-//         getAllCars
-//         getCarById,
-//         createCar,
-//         deleteCar,
-//         editCar,
-//         bodyData,
-//     }
-//     next()
-// }
 module.exports = {
     getAllCars,
     getCarById,

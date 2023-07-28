@@ -51,8 +51,6 @@ router.route('/edit/:_id')
         res.redirect(`/products/details/${id}`)
     })
 
-
-
 router.get('/details/:_id', async (req, res) => {
     const car = await req.storage.getCarById(req.params._id)
     if (car) {
@@ -63,11 +61,14 @@ router.get('/details/:_id', async (req, res) => {
 })
 
 router.route('/attach/:_id')
-    .get((req, res) => {
+    .get(async(req, res) => {
         //TODO getAllAccessory service 
-        res.render('attachAccessory', { accessories })
+
+        const car =await req.storage.getCarById(req.params._id)
+        res.render('attachAccessory', { car })
     })
     .post(async (req, res) => {
-
+        //TODO Create a realtion with car 
+        //TODO 
     })
 module.exports = router
