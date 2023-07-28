@@ -63,15 +63,30 @@ router.get('/details/:_id', async (req, res) => {
 
 router.route('/attach/:_id')
     .get(async (req, res) => {
-        //TODO getAllAccessory service 
+        const carId = req.params._id
 
-        const car = await req.storage.getCarById(req.params._id)
-        const accessories = await req.storage.getAllAccessory()
-        console.log(accessories);
+        // const car = await req.storage.getCarById(carId)
+        // const accessories = await req.storage.getAllAccessory()
+
+        const [car, accessories] = await Promise.all([
+            req.storage.getCarById(carId),
+            req.storage.getAllAccessory()
+        ])
 
         res.render('attachAccessory', { car, accessories })
     })
     .post(async (req, res) => {
+        const accessoryId = req.body.accessory
+        const carId = req.params._id
+        // const accessory = await req.storage.getAccessoryById(accessoryId)
+
+        // const car = await req.storage.getCarById(carId)
+        // car.accessories.push(accessoryId)
+        // await car.save()
+
+        req.storage.attachAccessory(carId, accessory)
+
+        res.redirect(`/products/details/${req.params._id}`)
         //TODO Create a realtion with car 
         //TODO 
     })

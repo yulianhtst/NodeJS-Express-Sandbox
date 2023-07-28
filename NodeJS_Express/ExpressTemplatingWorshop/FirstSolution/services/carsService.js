@@ -2,7 +2,7 @@ const Car = require('../models/Car')
 
 
 async function getAllCars
-({ search, from, to }) {
+    ({ search, from, to }) {
     const options = {};
 
     if (search) {
@@ -45,10 +45,19 @@ async function deleteCar(id) {
     await Car.findByIdAndDelete(id)
 }
 
+async function attachAccessory(carId, accessoryId) {
+    const existing = await Car.findById(carId)
+
+    existing.accessories.push(accessoryId)
+    existing.save()
+}
+
+
 module.exports = {
     getAllCars,
     getCarById,
     createCar,
     deleteCar,
     editCar,
+    attachAccessory,
 }
