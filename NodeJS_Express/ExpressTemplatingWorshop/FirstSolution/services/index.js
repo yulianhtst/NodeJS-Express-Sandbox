@@ -1,4 +1,4 @@
-const { createAccessory, deleteAccessoryById } = require('./accessoryService')
+const { createAccessory, deleteAccessoryById, getAllAccessory } = require('./accessoryService')
 const { getAllCars, getCarById, createCar, deleteCar, editCar } = require('./carsService')
 
 
@@ -20,7 +20,8 @@ module.exports = () => (req, res, next) => {
         deleteCar,
         editCar,
         bodyData,
-        deleteAccessoryById
+        deleteAccessoryById,
+        getAllAccessory,
     }
     next()
 }
