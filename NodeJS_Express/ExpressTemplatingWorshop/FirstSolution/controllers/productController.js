@@ -21,7 +21,7 @@ router.route('/create')
 
 router.route('/delete/:_id')
     .get(async (req, res) => {
-        const car = await req.storage.getById(req.params._id)
+        const car = await req.storage.getCarById(req.params._id)
 
         try {
             res.render('delete', { car })
@@ -40,7 +40,7 @@ router.route('/delete/:_id')
 
 router.route('/edit/:_id')
     .get(async (req, res) => {
-        const car = await req.storage.getById(req.params._id)
+        const car = await req.storage.getCarById(req.params._id)
         res.render('edit', { car })
     })
     .post(async (req, res) => {
@@ -51,15 +51,43 @@ router.route('/edit/:_id')
         res.redirect(`/products/details/${id}`)
     })
 
-
-
 router.get('/details/:_id', async (req, res) => {
-    const car = await req.storage.getById(req.params._id)
+    const car = await req.storage.getCarById(req.params._id)
+    // const accessories = await req.storage.getAllAccessory()
+    // console.log(accessories);
+
+    const accessoryIdObj = car.accessories
+    const idArr = await req.storage.getManyAccessories(accessoryIdObj)
+
     if (car) {
-        res.render('details', { car })
+        res.render('details', { car, idArr })
     } else {
         res.redirect('/404')
     }
 })
 
+router.route('/attach/:_id')
+    .get(async (req, res) => {
+        const carId = req.params._id
+
+        const [car, accessories] = await Promise.all([
+            req.storage.getCarById(carId),
+            req.storage.getAllAccessory()
+        ])
+
+        const availableAccessories = accessories.filter((a) => {
+            return !car.accessories.map((x) => x.toString()).includes(a._id.toString())
+        });
+        console.log(availableAccessories);
+
+        res.render('attachAccessory', { car, availableAccessories })
+    })
+    .post(async (req, res) => {
+        const accessoryId = req.body.accessory
+        const carId = req.params._id
+
+        req.storage.attachAccessory(carId, accessoryId)
+
+        res.redirect(`/products/details/${req.params._id}`)
+    })
 module.exports = router

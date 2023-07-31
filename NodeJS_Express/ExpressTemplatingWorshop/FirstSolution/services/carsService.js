@@ -1,7 +1,8 @@
 const Car = require('../models/Car')
 
 
-async function getAll({ search, from, to }) {
+async function getAllCars
+    ({ search, from, to }) {
     const options = {};
 
     if (search) {
@@ -25,9 +26,8 @@ async function editCar(id, data) {
     console.log(car);
 }
 
-async function getById(id) {
+async function getCarById(id) {
     const car = await Car.findById(id).lean()
-
     if (car) {
         return car
     } else {
@@ -45,24 +45,19 @@ async function deleteCar(id) {
     await Car.findByIdAndDelete(id)
 }
 
+async function attachAccessory(carId, accessoryId) {
+    const existing = await Car.findById(carId)
+
+    existing.accessories.push(accessoryId)
+    existing.save()
+}
 
 
-module.exports = () => (req, res, next) => {
-    function bodyData() {
-        return {
-            name: req.body.name || 'No name',
-            description: req.body.description || 'No description',
-            imageUrl: req.body.imageUrl || 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg',
-            price: parseFloat(req.body.price.replace(',', '')) || 0,
-        }
-    }
-    req.storage = {
-        getAll,
-        getById,
-        createCar,
-        deleteCar,
-        editCar,
-        bodyData,
-    }
-    next()
+module.exports = {
+    getAllCars,
+    getCarById,
+    createCar,
+    deleteCar,
+    editCar,
+    attachAccessory,
 }

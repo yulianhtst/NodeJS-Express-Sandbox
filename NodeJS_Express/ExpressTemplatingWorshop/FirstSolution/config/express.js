@@ -1,13 +1,14 @@
 const { engine } = require('express-handlebars')
 const express = require('express')
-const carsService = require('../services/carsService')
+const services = require('../services/index')
+
 
 function setupExpress(app) {
     //-----------MIDDLEWARE--------------------------
-    
+
     app.use(express.urlencoded({ extended: false }))
     app.use(express.static('public'))
-    app.use(carsService())
+    app.use(services())
 
     //-----------------------------------------------
 
