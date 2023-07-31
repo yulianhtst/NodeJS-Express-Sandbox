@@ -58,7 +58,6 @@ router.get('/details/:_id', async (req, res) => {
 
     const accessoryIdObj = car.accessories
     const idArr = await req.storage.getManyAccessories(accessoryIdObj)
-    console.log(idArr);
 
     if (car) {
         res.render('details', { car, idArr })
@@ -76,16 +75,16 @@ router.route('/attach/:_id')
             req.storage.getAllAccessory()
         ])
 
-        res.render('attachAccessory', { car, accessories })
+        const availableAccessories = accessories.filter((a) => {
+            return !car.accessories.map((x) => x.toString()).includes(a._id.toString())
+        });
+        console.log(availableAccessories);
+
+        res.render('attachAccessory', { car, availableAccessories })
     })
     .post(async (req, res) => {
         const accessoryId = req.body.accessory
         const carId = req.params._id
-        // const accessory = await req.storage.getAccessoryById(accessoryId)
-
-        // const car = await req.storage.getCarById(carId)
-        // car.accessories.push(accessoryId)
-        // await car.save()
 
         req.storage.attachAccessory(carId, accessoryId)
 

@@ -3,12 +3,12 @@
     <div class="form">
         <h2>{{car.name}}</h2>
         <img class="cube" src="{{car.imageUrl}}">
-        {{#if accessories}}
+        {{#if availableAccessories}}
         <form action="/products/attach/{{car._id}}" method="POST">
             <label for="accessory">Accessories</label>
 
             <select id="accessory" name="accessory">
-                {{#each accessories}}
+                {{#each availableAccessories}}
                 <option value="{{_id}}">{{name}}</option>
                 {{/each}}
             </select>
