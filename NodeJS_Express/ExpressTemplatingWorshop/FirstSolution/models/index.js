@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 require('./Car')
 require('./Accessory')
+require('./User')
 
 const connectionString = "mongodb://localhost:27017/carbicle"
 

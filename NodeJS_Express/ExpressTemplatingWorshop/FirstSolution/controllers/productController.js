@@ -78,8 +78,7 @@ router.route('/attach/:_id')
         const availableAccessories = accessories.filter((a) => {
             return !car.accessories.map((x) => x.toString()).includes(a._id.toString())
         });
-        console.log(availableAccessories);
-
+        n
         res.render('attachAccessory', { car, availableAccessories })
     })
     .post(async (req, res) => {
