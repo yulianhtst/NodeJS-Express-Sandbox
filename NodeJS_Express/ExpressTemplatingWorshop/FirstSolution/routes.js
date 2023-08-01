@@ -1,6 +1,7 @@
 const productRoutes = require('./controllers/productController')
 const homeController = require('./controllers/homeController')
 const accessoryController = require('./controllers/accessoryController')
+const authController = require('./controllers/authController')
 
 const { Router } = require('express')
 const router = Router()
@@ -9,6 +10,7 @@ const router = Router()
 
 
 router.use('/', homeController)
+router.use('/auth', authController)
 router.use('/products', productRoutes)
 router.use('/accessory', accessoryController)
 
